@@ -1,8 +1,7 @@
 # PDialog-Android
 Android Library to show a beautiful Alert View
 <br/>
-[![](https://jitpack.io/v/amspayam/AlertView-Android.svg)](https://jitpack.io/#amspayam/AlertView-Android)
-[![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-AlertView--Android-green.svg?style=flat )]( https://android-arsenal.com/details/1/6404 )
+[![](https://jitpack.io/v/amspayam/PDialog-Android.svg)](https://jitpack.io/#amspayam/PDialog-Android)
 <br/>
 Minimum API 17
 [Sample project](https://github.com/amspayam/AlertView-Android/tree/master/app)
@@ -21,7 +20,7 @@ Add JitPack repository in your root build.gradle at the end of repositories.
 Add dependency in your app level build.gradle.
 
     dependencies {
-	        compile 'com.github.amspayam:AlertView-Android:1.2.0'
+	        implementation 'com.github.amspayam:PDialog-Android:1.0.0'
 	}
    
 #### Step 2
