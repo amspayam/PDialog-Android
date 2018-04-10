@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.Toast;
 
+import ir.pkokabi.pdialog.PDialog;
 
 
 public class MainActivity extends AppCompatActivity implements PDialog.FirstButtonCallBack {
