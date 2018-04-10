@@ -72,8 +72,8 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
             secondBtn.setVisibility(View.GONE);
         else {
             secondBtn.setText(secondButtonTitle);
-            secondBtn.setTextColor(ContextCompat.getColor(getContext(), secondButtonSize));
-            secondBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, secondButtonColor);
+            secondBtn.setTextColor(ContextCompat.getColor(getContext(), secondButtonColor));
+            secondBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, secondButtonSize);
             secondBtn.setOnClickListener(this);
         }
 

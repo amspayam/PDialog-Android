@@ -7,7 +7,6 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.Toast;
 
-import ir.pkokabi.pdialog.PDialog;
 
 
 public class MainActivity extends AppCompatActivity implements PDialog.FirstButtonCallBack {
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements PDialog.FirstButt
                         .titleColor(R.color.colorPrimary)
                         .isCancelable(false)
                         .firstButtonTitle("Ok")
+                        .secondButtonTitle("No")
                         .setFirstButtonCallBack(MainActivity.this)
                         .build();
             }
