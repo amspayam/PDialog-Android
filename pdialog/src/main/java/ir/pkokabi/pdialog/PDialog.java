@@ -1,12 +1,14 @@
 package ir.pkokabi.pdialog;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.CardView;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
@@ -15,29 +17,29 @@ import android.widget.TextView;
 
 public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
-    protected TextView titleTv;
-    protected AppCompatButton firstBtn, secondBtn;
-    private final String titleText, firstButtonTitle, secondButtonTitle;
-    private final int titleColor, firstButtonColor, secondButtonColor;
-    private final int titleSize, firstButtonSize, secondButtonSize;
+    private final String title, positiveTitle, negativeTitle;
+    private final int titleColor, positiveColor, negativeColor;
+    private final int titleSize, positiveSize, negativeSize;
+    private final int cornerRadius;
     private final boolean isCancelable;
-    private final FirstButtonCallBack firstButtonCallBack;
-    private final SecondButtonCallBack secondButtonCallBack;
+    private final PositiveListener positiveListener;
+    private final NegativeListener negativeListener;
 
-    private PDialog(Context context, PDialogBuilder builder) {
+    private PDialog(Context context, Builder builder) {
         super(context);
-        this.titleText = builder.titleText;
-        this.firstButtonTitle = builder.firstButtonTitle;
-        this.secondButtonTitle = builder.secondButtonTitle;
+        this.title = builder.title;
+        this.positiveTitle = builder.positiveTitle;
+        this.negativeTitle = builder.negativeTitle;
         this.titleColor = builder.titleColor;
-        this.firstButtonColor = builder.firstButtonColor;
-        this.secondButtonColor = builder.secondButtonColor;
+        this.positiveColor = builder.positiveColor;
+        this.negativeColor = builder.negativeColor;
         this.titleSize = builder.titleSize;
-        this.firstButtonSize = builder.firstButtonSize;
-        this.secondButtonSize = builder.secondButtonSize;
+        this.positiveSize = builder.positiveSize;
+        this.negativeSize = builder.negativeSize;
+        this.cornerRadius = builder.cornerRadius;
         this.isCancelable = builder.isCancelable;
-        this.firstButtonCallBack = builder.firstButtonCallBack;
-        this.secondButtonCallBack = builder.secondButtonCallBack;
+        this.positiveListener = builder.positiveListener;
+        this.negativeListener = builder.negativeListener;
         show();
     }
 
@@ -51,163 +53,192 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         if (getWindow() != null)
             getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        titleTv = findViewById(R.id.titleTv);
-        firstBtn = findViewById(R.id.firstBtn);
-        secondBtn = findViewById(R.id.secondBtn);
+        CardView rootView = findViewById(R.id.rootView);
+        TextView titleTv = findViewById(R.id.titleTv);
+        AppCompatButton positiveBtn = findViewById(R.id.positiveBtn);
+        AppCompatButton negativeBtn = findViewById(R.id.negativeBtn);
 
-        titleTv.setText(titleText);
+        assert titleTv != null;
+        if (title != null) {
+            titleTv.setText(title);
+            assert rootView != null;
+            if (isPersian(title))
+                rootView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            else
+                rootView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        }
         titleTv.setTextColor(ContextCompat.getColor(getContext(), titleColor));
         titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleSize);
 
-        if (firstButtonTitle == null)
-            firstBtn.setVisibility(View.GONE);
-        else {
-            firstBtn.setText(firstButtonTitle);
-            firstBtn.setTextColor(ContextCompat.getColor(getContext(), firstButtonColor));
-            firstBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, firstButtonSize);
-            firstBtn.setOnClickListener(this);
+        if (positiveTitle == null) {
+            assert positiveBtn != null;
+            positiveBtn.setVisibility(View.GONE);
+        } else {
+            assert positiveBtn != null;
+            positiveBtn.setText(positiveTitle);
+            positiveBtn.setTextColor(ContextCompat.getColor(getContext(), positiveColor));
+            positiveBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, positiveSize);
+            positiveBtn.setOnClickListener(this);
         }
 
-        if (secondButtonTitle == null)
-            secondBtn.setVisibility(View.GONE);
-        else {
-            secondBtn.setText(secondButtonTitle);
-            secondBtn.setTextColor(ContextCompat.getColor(getContext(), secondButtonColor));
-            secondBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, secondButtonSize);
-            secondBtn.setOnClickListener(this);
+        if (negativeTitle == null) {
+            assert negativeBtn != null;
+            negativeBtn.setVisibility(View.GONE);
+        } else {
+            assert negativeBtn != null;
+            negativeBtn.setText(negativeTitle);
+            negativeBtn.setTextColor(ContextCompat.getColor(getContext(), negativeColor));
+            negativeBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, negativeSize);
+            negativeBtn.setOnClickListener(this);
+        }
+
+        if (cornerRadius != dpToPx(8)) {
+            assert rootView != null;
+            rootView.setRadius(cornerRadius);
         }
 
     }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.firstBtn) {
-            firstButtonCallBack.onFirstButtonClick();
+        if (view.getId() == R.id.positiveBtn) {
+            if (positiveListener != null)
+                positiveListener.onPositiveClick();
             dismiss();
         } else {
-            secondButtonCallBack.onSecondButtonClick();
+            if (negativeListener != null)
+                negativeListener.onNegativeClick();
             dismiss();
         }
     }
 
-    public String getTitleText() {
-        return titleText;
+    public String getTitle() {
+        return title;
     }
 
-    public String getFirstButtonTitle() {
-        return firstButtonTitle;
+    public String getPositiveTitle() {
+        return positiveTitle;
     }
 
-    public String getSecondButtonTitle() {
-        return secondButtonTitle;
+    public String getNegativeTitle() {
+        return negativeTitle;
     }
 
     public int getTitleColor() {
         return titleColor;
     }
 
-    public int getFirstButtonColor() {
-        return firstButtonColor;
+    public int getPositiveColor() {
+        return positiveColor;
     }
 
-    public int getSecondButtonColor() {
-        return secondButtonColor;
+    public int getNegativeColor() {
+        return negativeColor;
     }
 
     public int getTitleSize() {
         return titleSize;
     }
 
-    public int getFirstButtonSize() {
-        return firstButtonSize;
+    public int getPositiveSize() {
+        return positiveSize;
     }
 
-    public int getSecondButtonSize() {
-        return secondButtonSize;
+    public int getNegativeSize() {
+        return negativeSize;
     }
 
     public boolean isCancelable() {
         return isCancelable;
     }
 
-    public FirstButtonCallBack getFirstButtonCallBack() {
-        return firstButtonCallBack;
+    public PositiveListener getPositiveListener() {
+        return positiveListener;
     }
 
-    public SecondButtonCallBack getSecondButtonCallBack() {
-        return secondButtonCallBack;
+    public NegativeListener getNegativeListener() {
+        return negativeListener;
     }
 
     /*Class Builder===============================================================================*/
-    public static class PDialogBuilder {
+    public static class Builder {
 
         private final Context context;
-        private final String titleText;
-        private String firstButtonTitle, secondButtonTitle;
-        private int titleColor = R.color.pDialogBlack, firstButtonColor = R.color.pDialogBlack, secondButtonColor = R.color.pDialogBlack;
-        private int titleSize = 16, firstButtonSize = 14, secondButtonSize = 14;
+        private String title, positiveTitle, negativeTitle;
+        private int titleColor = R.color.pDialogBlack, positiveColor = R.color.pDialogBlack, negativeColor = R.color.pDialogBlack;
+        private int titleSize = 16, positiveSize = 14, negativeSize = 14;
+        private int cornerRadius = dpToPx(8);
         private boolean isCancelable = true;
 
-        private FirstButtonCallBack firstButtonCallBack;
-        private SecondButtonCallBack secondButtonCallBack;
+        private PositiveListener positiveListener;
+        private NegativeListener negativeListener;
 
-        public PDialogBuilder(Context context, String titleText) {
+        public Builder(Context context) {
             this.context = context;
-            this.titleText = titleText;
         }
 
-        public PDialogBuilder firstButtonTitle(String firstButtonTitle) {
-            this.firstButtonTitle = firstButtonTitle;
+        public Builder title(String title) {
+            this.title = title;
             return this;
         }
 
-        public PDialogBuilder secondButtonTitle(String secondButtonTitle) {
-            this.secondButtonTitle = secondButtonTitle;
+        public Builder positiveTitle(String positiveTitle) {
+            this.positiveTitle = positiveTitle;
             return this;
         }
 
-        public PDialogBuilder titleColor(int titleColor) {
+        public Builder negativeTitle(String negativeTitle) {
+            this.negativeTitle = negativeTitle;
+            return this;
+        }
+
+        public Builder titleColor(int titleColor) {
             this.titleColor = titleColor;
             return this;
         }
 
-        public PDialogBuilder firstButtonColor(int firstButtonColor) {
-            this.firstButtonColor = firstButtonColor;
+        public Builder positiveColor(int positiveColor) {
+            this.positiveColor = positiveColor;
             return this;
         }
 
-        public PDialogBuilder secondButtonColor(int secondButtonColor) {
-            this.secondButtonColor = secondButtonColor;
+        public Builder negativeColor(int negativeColor) {
+            this.negativeColor = negativeColor;
             return this;
         }
 
-        public PDialogBuilder titleSize(int titleSize) {
+        public Builder titleSize(int titleSize) {
             this.titleSize = titleSize;
             return this;
         }
 
-        public PDialogBuilder firstButtonSize(int firstButtonSize) {
-            this.firstButtonSize = firstButtonSize;
+        public Builder positiveSize(int positiveSize) {
+            this.positiveSize = positiveSize;
             return this;
         }
 
-        public PDialogBuilder secondButtonSize(int secondButtonSize) {
-            this.secondButtonSize = secondButtonSize;
+        public Builder negativeSize(int negativeSize) {
+            this.negativeSize = negativeSize;
             return this;
         }
 
-        public PDialogBuilder isCancelable(boolean isCancelable) {
+        public Builder cornerRadius(int cornerRadius) {
+            this.cornerRadius = cornerRadius;
+            return this;
+        }
+
+        public Builder isCancelable(boolean isCancelable) {
             this.isCancelable = isCancelable;
             return this;
         }
 
-        public PDialogBuilder setFirstButtonCallBack(FirstButtonCallBack firstButtonCallBack) {
-            this.firstButtonCallBack = firstButtonCallBack;
+        public Builder setPositiveListener(PositiveListener positiveListener) {
+            this.positiveListener = positiveListener;
             return this;
         }
 
-        public PDialogBuilder setSecondButtonCallBack(SecondButtonCallBack secondButtonCallBack) {
-            this.secondButtonCallBack = secondButtonCallBack;
+        public Builder setNegativeListener(NegativeListener negativeListener) {
+            this.negativeListener = negativeListener;
             return this;
         }
 
@@ -218,12 +249,26 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
     }
 
     /*Dialog Interfaces===========================================================================*/
-    public interface FirstButtonCallBack {
-        void onFirstButtonClick();
+    public interface PositiveListener {
+        void onPositiveClick();
     }
 
-    public interface SecondButtonCallBack {
-        void onSecondButtonClick();
+    public interface NegativeListener {
+        void onNegativeClick();
+    }
+
+    /*Methods=====================================================================================*/
+    private boolean isPersian(String string) {
+        for (int i = 0; i < Character.codePointCount(string, 0, string.length()); i++) {
+            int c = string.codePointAt(i);
+            if (c >= 0x0600 && c <= 0x06FF || c == 0xFB8A)
+                return true;
+        }
+        return false;
+    }
+
+    private static int dpToPx(float dp) {
+        return (int) ((dp) * Resources.getSystem().getDisplayMetrics().density);
     }
 
 

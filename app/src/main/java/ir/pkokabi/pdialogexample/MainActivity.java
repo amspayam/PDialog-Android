@@ -4,13 +4,9 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
-import android.view.View;
-import android.widget.Toast;
-
-import ir.pkokabi.pdialog.PDialog;
 
 
-public class MainActivity extends AppCompatActivity implements PDialog.FirstButtonCallBack {
+public class MainActivity extends AppCompatActivity  {
 
     private Context context;
 
@@ -23,24 +19,24 @@ public class MainActivity extends AppCompatActivity implements PDialog.FirstButt
 
         AppCompatButton btn = findViewById(R.id.dialogBtn);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new PDialog
-                        .PDialogBuilder(context, "hi")
-                        .titleColor(R.color.colorPrimary)
-                        .isCancelable(false)
-                        .firstButtonTitle("Ok")
-                        .secondButtonTitle("No")
-                        .setFirstButtonCallBack(MainActivity.this)
-                        .build();
-            }
-        });
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new PDialog
+//                        .Builder(context)
+//                        .title("سلام چه خبر ، چطوری؟")
+//                        .positiveTitle("خوبم تو چطوری؟")
+//                        .negativeTitle("به تو چه؟")
+//                        .cornerRadius(2)
+//                        .setPositiveListener(MainActivity.this)
+//                        .build();
+//            }
+//        });
 
     }
 
-    @Override
-    public void onFirstButtonClick() {
-        Toast.makeText(this, "OK Clicked", Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    public void onPositiveClick() {
+//        Toast.makeText(this, "OK Clicked", Toast.LENGTH_SHORT).show();
+//    }
 }

@@ -1,5 +1,6 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -26,32 +27,34 @@
             android:lineSpacingExtra="2dp"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
+            android:text="How You Doing"
             android:textColor="@color/pDialogBlack"
             android:textIsSelectable="true"
             android:textSize="16sp" />
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/secondBtn"
+            android:id="@+id/negativeBtn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:layout_below="@+id/titleTv"
-            android:layout_marginTop="8dp"
-            android:layout_toStartOf="@+id/firstBtn"
+            android:layout_marginTop="16dp"
+            android:layout_toStartOf="@+id/positiveBtn"
             android:background="@color/transparent"
+            android:text="No"
             android:textColor="@color/pDialogBlack"
             android:textSize="14sp" />
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/firstBtn"
+            android:id="@+id/positiveBtn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/titleTv"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:background="@color/transparent"
+            android:text="Ok"
             android:textColor="@color/pDialogBlack"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
