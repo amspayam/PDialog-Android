@@ -20,19 +20,20 @@ Add JitPack repository in your root build.gradle at the end of repositories.
 Add dependency in your app level build.gradle.
 
     dependencies {
-	        implementation 'com.github.amspayam:PDialog-Android:1.0.2'
+	        implementation 'com.github.amspayam:PDialog-Android:1.0.3'
 	}
    
 #### Step 2
 use in Java Code
 ```Java
-new PDialog.Builder(context)
-    .title(getString(R.string.title))
-    .titleSize(18)
-    .positiveTitle(getString(R.string.yes))
-    .positiveSize(12)
-    .negativeTitle(getString(R.string.no))
-    .negativeSize(12)
-    .setPositiveListener(this)
-    .build();
+new PDialog
+        .Builder(context, 1)
+        .title(getString(R.string.title))
+        .titleSize(18)
+        .positiveTitle(getString(R.string.yes))
+        .positiveSize(12)
+        .negativeTitle(getString(R.string.no))
+        .cornerRadius(8)
+        .setPositiveListener(MainActivity.this)
+        .build();
 ```
