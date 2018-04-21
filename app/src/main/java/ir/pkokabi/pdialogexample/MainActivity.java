@@ -4,9 +4,12 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.view.View;
+
+import ir.pkokabi.pdialog.PDialog;
 
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements PDialog.PositiveListener {
 
     private Context context;
 
@@ -19,19 +22,24 @@ public class MainActivity extends AppCompatActivity  {
 
         AppCompatButton btn = findViewById(R.id.dialogBtn);
 
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new PDialog
-//                        .Builder(context)
-//                        .title("سلام چه خبر ، چطوری؟")
-//                        .positiveTitle("خوبم تو چطوری؟")
-//                        .negativeTitle("به تو چه؟")
-//                        .cornerRadius(2)
-//                        .setPositiveListener(MainActivity.this)
-//                        .build();
-//            }
-//        });
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new PDialog
+                        .Builder(context, 1)
+                        .title("سلام چه خبر ، چطوری؟")
+                        .positiveTitle("خوبم تو چطوری؟")
+                        .negativeTitle("به تو چه؟")
+                        .cornerRadius(8)
+                        .setPositiveListener(MainActivity.this)
+                        .build();
+            }
+        });
+
+    }
+
+    @Override
+    public void onPositiveClick(int id) {
 
     }
 

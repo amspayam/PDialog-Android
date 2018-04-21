@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
+    private final int id;
     private final String title, positiveTitle, negativeTitle;
     private final int titleColor, positiveColor, negativeColor;
     private final int titleSize, positiveSize, negativeSize;
@@ -27,6 +28,7 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
     private PDialog(Context context, Builder builder) {
         super(context);
+        this.id = builder.id;
         this.title = builder.title;
         this.positiveTitle = builder.positiveTitle;
         this.negativeTitle = builder.negativeTitle;
@@ -103,11 +105,11 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
     public void onClick(View view) {
         if (view.getId() == R.id.positiveBtn) {
             if (positiveListener != null)
-                positiveListener.onPositiveClick();
+                positiveListener.onPositiveClick(id);
             dismiss();
         } else {
             if (negativeListener != null)
-                negativeListener.onNegativeClick();
+                negativeListener.onNegativeClick(id);
             dismiss();
         }
     }
@@ -164,6 +166,7 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
     public static class Builder {
 
         private final Context context;
+        private int id;
         private String title, positiveTitle, negativeTitle;
         private int titleColor = R.color.pDialogBlack, positiveColor = R.color.pDialogBlack, negativeColor = R.color.pDialogBlack;
         private int titleSize = 16, positiveSize = 14, negativeSize = 14;
@@ -173,8 +176,9 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         private PositiveListener positiveListener;
         private NegativeListener negativeListener;
 
-        public Builder(Context context) {
+        public Builder(Context context, int id) {
             this.context = context;
+            this.id = id;
         }
 
         public Builder title(String title) {
@@ -250,11 +254,11 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
     /*Dialog Interfaces===========================================================================*/
     public interface PositiveListener {
-        void onPositiveClick();
+        void onPositiveClick(int id);
     }
 
     public interface NegativeListener {
-        void onNegativeClick();
+        void onNegativeClick(int id);
     }
 
     /*Methods=====================================================================================*/
