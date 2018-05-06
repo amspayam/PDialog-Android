@@ -3,5 +3,8 @@
 
     <color name="pDialogBlack">#444</color>
     <color name="transparent">#00000000</color>
+    <color name="pDialogWhite">#FFF</color>
+    <color name="pDialogGray">#7A7A7A</color>
+    <color name="pDialogLightGray">#A3A3A3</color>
 
 </resources>

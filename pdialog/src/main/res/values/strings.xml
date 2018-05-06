@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PDialog</string>
+    <string name="noInternetTitle">No Internet</string>
+    <string name="wifi">Wifi</string>
+    <string name="mobileData">Mobile data</string>
+    <string name="noInternetDesc">You are not connected to \n the Internet</string>
+    <string name="pleaseTurnOn">Please Turn On</string>
 </resources>

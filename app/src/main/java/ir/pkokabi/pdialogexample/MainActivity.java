@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
+import ir.pkokabi.pdialog.NetworkDialog;
 import ir.pkokabi.pdialog.PDialog;
 
 
@@ -32,6 +33,16 @@ public class MainActivity extends AppCompatActivity implements PDialog.PositiveL
                         .negativeTitle("به تو چه؟")
                         .cornerRadius(8)
                         .setPositiveListener(MainActivity.this)
+                        .build();
+            }
+        });
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new NetworkDialog
+                        .Builder(context)
+                        .isPersian(true)
                         .build();
             }
         });

@@ -49,7 +49,7 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.p_dialog);
+        setContentView(R.layout.view_dialog);
 
         setCancelable(isCancelable);
         if (getWindow() != null)
