@@ -20,7 +20,7 @@ Add JitPack repository in your root build.gradle at the end of repositories.
 Add dependency in your app level build.gradle.
 
     dependencies {
-	        implementation 'com.github.amspayam:PDialog-Android:1.0.3'
+	        implementation 'com.github.amspayam:PDialog-Android:1.0.4'
 	}
    
 #### Step 2
@@ -36,4 +36,10 @@ new PDialog
         .cornerRadius(8)
         .setPositiveListener(MainActivity.this)
         .build();
+
+new NetworkDialog
+    .Builder(context)
+    .isPersian(true)
+    .setButtonBackground(R.drawable.shape_internet)
+    .build();
 ```

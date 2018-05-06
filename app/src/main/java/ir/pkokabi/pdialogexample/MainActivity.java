@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements PDialog.PositiveL
                 new NetworkDialog
                         .Builder(context)
                         .isPersian(true)
+                        .setButtonBackground(R.drawable.shape_internet)
                         .build();
             }
         });
