@@ -226,7 +226,7 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
             return this;
         }
 
-        public Builder titleSize(boolean isTitleBold) {
+        public Builder isTitleBold(boolean isTitleBold) {
             this.isTitleBold = isTitleBold;
             return this;
         }
