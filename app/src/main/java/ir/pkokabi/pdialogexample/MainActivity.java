@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements PDialog.PositiveL
                 new PDialog
                         .Builder(context, 1)
                         .title("سلام چه خبر ، چطوری؟")
+                        .subTitle("سلام چه خبر ، چطوری؟")
                         .positiveTitle("خوبم تو چطوری؟")
                         .negativeTitle("به تو چه؟")
                         .cornerRadius(8)
