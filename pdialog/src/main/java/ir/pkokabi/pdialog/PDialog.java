@@ -3,6 +3,7 @@ package ir.pkokabi.pdialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -18,9 +19,27 @@ import android.widget.TextView;
 public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
     private final int id;
-    private final String title, positiveTitle, negativeTitle;
-    private final int titleColor, positiveColor, negativeColor;
-    private final int titleSize, positiveSize, negativeSize;
+
+    private final String title;
+    private final int titleColor;
+    private final int titleSize;
+    private final boolean isTitleBold;
+
+    private final String subTitle;
+    private final int subTitleColor;
+    private final int subTitleSize;
+    private final boolean isSubTitleBold;
+
+    private final String positiveTitle;
+    private final int positiveColor;
+    private final int positiveSize;
+    private final boolean isPositiveTitleBold;
+
+    private final String negativeTitle;
+    private final int negativeColor;
+    private final int negativeSize;
+    private final boolean isNegativeTitleBold;
+
     private final int cornerRadius;
     private final boolean isCancelable;
     private final PositiveListener positiveListener;
@@ -30,14 +49,25 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         super(context);
         this.id = builder.id;
         this.title = builder.title;
-        this.positiveTitle = builder.positiveTitle;
-        this.negativeTitle = builder.negativeTitle;
         this.titleColor = builder.titleColor;
-        this.positiveColor = builder.positiveColor;
-        this.negativeColor = builder.negativeColor;
         this.titleSize = builder.titleSize;
+        this.isTitleBold = builder.isTitleBold;
+
+        this.subTitle = builder.subTitle;
+        this.subTitleColor = builder.subTitleColor;
+        this.subTitleSize = builder.subTitleSize;
+        this.isSubTitleBold = builder.isSubTitleBold;
+
+        this.positiveTitle = builder.positiveTitle;
+        this.positiveColor = builder.positiveColor;
         this.positiveSize = builder.positiveSize;
+        this.isPositiveTitleBold = builder.isPositiveTitleBold;
+
+        this.negativeTitle = builder.negativeTitle;
+        this.negativeColor = builder.negativeColor;
         this.negativeSize = builder.negativeSize;
+        this.isNegativeTitleBold = builder.isNegativeTitleBold;
+
         this.cornerRadius = builder.cornerRadius;
         this.isCancelable = builder.isCancelable;
         this.positiveListener = builder.positiveListener;
@@ -57,6 +87,7 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
         CardView rootView = findViewById(R.id.rootView);
         TextView titleTv = findViewById(R.id.titleTv);
+        TextView subTitleTv = findViewById(R.id.subTitleTv);
         AppCompatButton positiveBtn = findViewById(R.id.positiveBtn);
         AppCompatButton negativeBtn = findViewById(R.id.negativeBtn);
 
@@ -71,6 +102,20 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         }
         titleTv.setTextColor(ContextCompat.getColor(getContext(), titleColor));
         titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleSize);
+        if (isTitleBold)
+            titleTv.setTypeface(titleTv.getTypeface(), Typeface.BOLD);
+
+        if (subTitle == null) {
+            assert subTitleTv != null;
+            subTitleTv.setVisibility(View.GONE);
+        } else {
+            assert subTitleTv != null;
+            subTitleTv.setText(subTitle);
+            subTitleTv.setTextColor(ContextCompat.getColor(getContext(), subTitleColor));
+            subTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, subTitleSize);
+            if (isSubTitleBold)
+                subTitleTv.setTypeface(subTitleTv.getTypeface(), Typeface.BOLD);
+        }
 
         if (positiveTitle == null) {
             assert positiveBtn != null;
@@ -81,6 +126,8 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
             positiveBtn.setTextColor(ContextCompat.getColor(getContext(), positiveColor));
             positiveBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, positiveSize);
             positiveBtn.setOnClickListener(this);
+            if (isPositiveTitleBold)
+                positiveBtn.setTypeface(positiveBtn.getTypeface(), Typeface.BOLD);
         }
 
         if (negativeTitle == null) {
@@ -92,6 +139,8 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
             negativeBtn.setTextColor(ContextCompat.getColor(getContext(), negativeColor));
             negativeBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, negativeSize);
             negativeBtn.setOnClickListener(this);
+            if (isNegativeTitleBold)
+                negativeBtn.setTypeface(negativeBtn.getTypeface(), Typeface.BOLD);
         }
 
         if (cornerRadius != dpToPx(8)) {
@@ -118,42 +167,6 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         return title;
     }
 
-    public String getPositiveTitle() {
-        return positiveTitle;
-    }
-
-    public String getNegativeTitle() {
-        return negativeTitle;
-    }
-
-    public int getTitleColor() {
-        return titleColor;
-    }
-
-    public int getPositiveColor() {
-        return positiveColor;
-    }
-
-    public int getNegativeColor() {
-        return negativeColor;
-    }
-
-    public int getTitleSize() {
-        return titleSize;
-    }
-
-    public int getPositiveSize() {
-        return positiveSize;
-    }
-
-    public int getNegativeSize() {
-        return negativeSize;
-    }
-
-    public boolean isCancelable() {
-        return isCancelable;
-    }
-
     public PositiveListener getPositiveListener() {
         return positiveListener;
     }
@@ -167,9 +180,26 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
         private final Context context;
         private int id;
-        private String title, positiveTitle, negativeTitle;
-        private int titleColor = R.color.pDialogBlack, positiveColor = R.color.pDialogBlack, negativeColor = R.color.pDialogBlack;
-        private int titleSize = 16, positiveSize = 14, negativeSize = 14;
+        private String title;
+        private int titleColor = R.color.pDialogBlack;
+        private int titleSize = 16;
+        private boolean isTitleBold = false;
+
+        private String subTitle;
+        private int subTitleColor = R.color.pDialogBlack;
+        private int subTitleSize = 15;
+        private boolean isSubTitleBold = false;
+
+        private String positiveTitle;
+        private int positiveColor = R.color.pDialogBlack;
+        private int positiveSize = 14;
+        private boolean isPositiveTitleBold = false;
+
+        private String negativeTitle;
+        private int negativeColor = R.color.pDialogBlack;
+        private int negativeSize = 14;
+        private boolean isNegativeTitleBold = false;
+
         private int cornerRadius = dpToPx(8);
         private boolean isCancelable = true;
 
@@ -186,28 +216,8 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
             return this;
         }
 
-        public Builder positiveTitle(String positiveTitle) {
-            this.positiveTitle = positiveTitle;
-            return this;
-        }
-
-        public Builder negativeTitle(String negativeTitle) {
-            this.negativeTitle = negativeTitle;
-            return this;
-        }
-
         public Builder titleColor(int titleColor) {
             this.titleColor = titleColor;
-            return this;
-        }
-
-        public Builder positiveColor(int positiveColor) {
-            this.positiveColor = positiveColor;
-            return this;
-        }
-
-        public Builder negativeColor(int negativeColor) {
-            this.negativeColor = negativeColor;
             return this;
         }
 
@@ -216,13 +226,68 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
             return this;
         }
 
+        public Builder titleSize(boolean isTitleBold) {
+            this.isTitleBold = isTitleBold;
+            return this;
+        }
+
+        public Builder subTitle(String subTitle) {
+            this.subTitle = subTitle;
+            return this;
+        }
+
+        public Builder subTitleColor(int subTitleColor) {
+            this.subTitleColor = subTitleColor;
+            return this;
+        }
+
+        public Builder subTitleSize(int subTitleSize) {
+            this.subTitleSize = subTitleSize;
+            return this;
+        }
+
+        public Builder isSubTitleBold(boolean isSubTitleBold) {
+            this.isSubTitleBold = isSubTitleBold;
+            return this;
+        }
+
+        public Builder positiveTitle(String positiveTitle) {
+            this.positiveTitle = positiveTitle;
+            return this;
+        }
+
+        public Builder positiveColor(int positiveColor) {
+            this.positiveColor = positiveColor;
+            return this;
+        }
+
         public Builder positiveSize(int positiveSize) {
             this.positiveSize = positiveSize;
             return this;
         }
 
+        public Builder isPositiveTitleBold(boolean isPositiveTitleBold) {
+            this.isPositiveTitleBold = isPositiveTitleBold;
+            return this;
+        }
+
+        public Builder negativeTitle(String negativeTitle) {
+            this.negativeTitle = negativeTitle;
+            return this;
+        }
+
+        public Builder negativeColor(int negativeColor) {
+            this.negativeColor = negativeColor;
+            return this;
+        }
+
         public Builder negativeSize(int negativeSize) {
             this.negativeSize = negativeSize;
+            return this;
+        }
+
+        public Builder isNegativeTitleBold(boolean isNegativeTitleBold) {
+            this.isNegativeTitleBold = isNegativeTitleBold;
             return this;
         }
 
