@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements PDialog.PositiveL
             public void onClick(View v) {
                 new PDialog
                         .Builder(context, 1)
-                        .title("سلام چه خبر ، چطوری؟")
+                        .title(getString(R.string.sample))
                         .subTitle("سلام چه خبر ، چطوری؟")
                         .positiveTitle("خوبم تو چطوری؟")
                         .negativeTitle("به تو چه؟")

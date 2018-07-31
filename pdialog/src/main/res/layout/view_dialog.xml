@@ -46,21 +46,11 @@
             android:textSize="14sp" />
 
         <LinearLayout
+            android:id="@+id/buttonLy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:orientation="horizontal">
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/negativeBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@color/transparent"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="No"
-                android:textColor="@color/pDialogBlack"
-                android:textSize="14sp" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/positiveBtn"
@@ -70,6 +60,17 @@
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
                 android:text="Ok"
+                android:textColor="@color/pDialogBlack"
+                android:textSize="14sp" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/negativeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@color/transparent"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="No"
                 android:textColor="@color/pDialogBlack"
                 android:textSize="14sp" />
 

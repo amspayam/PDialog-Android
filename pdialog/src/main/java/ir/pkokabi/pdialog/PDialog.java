@@ -11,8 +11,10 @@ import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -42,6 +44,7 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
     private final int cornerRadius;
     private final boolean isCancelable;
+    private final boolean isRTL;
     private final PositiveListener positiveListener;
     private final NegativeListener negativeListener;
 
@@ -70,6 +73,7 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
         this.cornerRadius = builder.cornerRadius;
         this.isCancelable = builder.isCancelable;
+        this.isRTL = builder.isRTL;
         this.positiveListener = builder.positiveListener;
         this.negativeListener = builder.negativeListener;
         show();
@@ -86,6 +90,7 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
             getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         CardView rootView = findViewById(R.id.rootView);
+        LinearLayout buttonLy = findViewById(R.id.buttonLy);
         TextView titleTv = findViewById(R.id.titleTv);
         TextView subTitleTv = findViewById(R.id.subTitleTv);
         AppCompatButton positiveBtn = findViewById(R.id.positiveBtn);
@@ -95,10 +100,6 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         if (title != null) {
             titleTv.setText(title);
             assert rootView != null;
-            if (isPersian(title))
-                rootView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-            else
-                rootView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         }
         titleTv.setTextColor(ContextCompat.getColor(getContext(), titleColor));
         titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleSize);
@@ -142,6 +143,12 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
             if (isNegativeTitleBold)
                 negativeBtn.setTypeface(negativeBtn.getTypeface(), Typeface.BOLD);
         }
+
+        assert buttonLy != null;
+        if (isRTL)
+            buttonLy.setGravity(Gravity.START);
+        else
+            buttonLy.setGravity(Gravity.END);
 
         if (cornerRadius != dpToPx(8)) {
             assert rootView != null;
@@ -202,6 +209,7 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
         private int cornerRadius = dpToPx(8);
         private boolean isCancelable = true;
+        private boolean isRTL = true;
 
         private PositiveListener positiveListener;
         private NegativeListener negativeListener;
@@ -301,6 +309,11 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
             return this;
         }
 
+        public Builder isRTL(boolean isRTL) {
+            this.isRTL = isRTL;
+            return this;
+        }
+
         public Builder setPositiveListener(PositiveListener positiveListener) {
             this.positiveListener = positiveListener;
             return this;
@@ -324,16 +337,6 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
     public interface NegativeListener {
         void onNegativeClick(int id);
-    }
-
-    /*Methods=====================================================================================*/
-    private boolean isPersian(String string) {
-        for (int i = 0; i < Character.codePointCount(string, 0, string.length()); i++) {
-            int c = string.codePointAt(i);
-            if (c >= 0x0600 && c <= 0x06FF || c == 0xFB8A)
-                return true;
-        }
-        return false;
     }
 
     private static int dpToPx(float dp) {
