@@ -20,7 +20,7 @@ Add JitPack repository in your root build.gradle at the end of repositories.
 Add dependency in your app level build.gradle.
 
     dependencies {
-	        implementation 'com.github.amspayam:PDialog-Android:1.0.4'
+	        implementation 'com.github.amspayam:PDialog-Android:1.0.8'
 	}
    
 #### Step 2
@@ -28,6 +28,7 @@ use in Java Code
 ```Java
 new PDialog
         .Builder(context, 1)
+        .isRTL(false)
         .title(getString(R.string.title))
         .titleSize(18)
         .positiveTitle(getString(R.string.yes))
