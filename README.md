@@ -20,7 +20,7 @@ Add JitPack repository in your root build.gradle at the end of repositories.
 Add dependency in your app level build.gradle.
 
     dependencies {
-	        implementation 'com.github.amspayam:PDialog-Android:1.0.8'
+	        implementation 'com.github.amspayam:PDialog-Android:1.0.9'
 	}
    
 #### Step 2
