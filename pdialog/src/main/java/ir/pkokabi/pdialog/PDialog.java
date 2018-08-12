@@ -25,11 +25,13 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
     private final String title;
     private final int titleColor;
     private final int titleSize;
+    private final int titleGravity;
     private final boolean isTitleBold;
 
     private final String subTitle;
     private final int subTitleColor;
     private final int subTitleSize;
+    private final int subTitleGravity;
     private final boolean isSubTitleBold;
 
     private final String positiveTitle;
@@ -54,11 +56,13 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         this.title = builder.title;
         this.titleColor = builder.titleColor;
         this.titleSize = builder.titleSize;
+        this.titleGravity = builder.titleGravity;
         this.isTitleBold = builder.isTitleBold;
 
         this.subTitle = builder.subTitle;
         this.subTitleColor = builder.subTitleColor;
         this.subTitleSize = builder.subTitleSize;
+        this.subTitleGravity = builder.subTitleGravity;
         this.isSubTitleBold = builder.isSubTitleBold;
 
         this.positiveTitle = builder.positiveTitle;
@@ -99,24 +103,23 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         assert titleTv != null;
         if (title != null) {
             titleTv.setText(title);
-            assert rootView != null;
-        }
-        titleTv.setTextColor(ContextCompat.getColor(getContext(), titleColor));
-        titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleSize);
-        if (isTitleBold)
-            titleTv.setTypeface(titleTv.getTypeface(), Typeface.BOLD);
+            titleTv.setTextColor(titleColor);
+            titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleSize);
+            titleTv.setGravity(titleGravity);
+            if (isTitleBold)
+                titleTv.setTypeface(titleTv.getTypeface(), Typeface.BOLD);
+        } else titleTv.setVisibility(View.GONE);
 
-        if (subTitle == null) {
-            assert subTitleTv != null;
-            subTitleTv.setVisibility(View.GONE);
-        } else {
-            assert subTitleTv != null;
+        assert subTitleTv != null;
+        if (subTitle != null) {
             subTitleTv.setText(subTitle);
-            subTitleTv.setTextColor(ContextCompat.getColor(getContext(), subTitleColor));
+            subTitleTv.setTextColor(subTitleColor);
             subTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, subTitleSize);
+            subTitleTv.setGravity(subTitleGravity);
             if (isSubTitleBold)
                 subTitleTv.setTypeface(subTitleTv.getTypeface(), Typeface.BOLD);
-        }
+        } else
+            subTitleTv.setVisibility(View.GONE);
 
         if (positiveTitle == null) {
             assert positiveBtn != null;
@@ -124,7 +127,7 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         } else {
             assert positiveBtn != null;
             positiveBtn.setText(positiveTitle);
-            positiveBtn.setTextColor(ContextCompat.getColor(getContext(), positiveColor));
+            positiveBtn.setTextColor(positiveColor);
             positiveBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, positiveSize);
             positiveBtn.setOnClickListener(this);
             if (isPositiveTitleBold)
@@ -137,7 +140,7 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         } else {
             assert negativeBtn != null;
             negativeBtn.setText(negativeTitle);
-            negativeBtn.setTextColor(ContextCompat.getColor(getContext(), negativeColor));
+            negativeBtn.setTextColor(negativeColor);
             negativeBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, negativeSize);
             negativeBtn.setOnClickListener(this);
             if (isNegativeTitleBold)
@@ -150,11 +153,8 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         else
             buttonLy.setGravity(Gravity.END);
 
-        if (cornerRadius != dpToPx(8)) {
-            assert rootView != null;
-            rootView.setRadius(cornerRadius);
-        }
-
+        assert rootView != null;
+        rootView.setRadius(dpToPx(cornerRadius));
     }
 
     @Override
@@ -170,18 +170,6 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         }
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public PositiveListener getPositiveListener() {
-        return positiveListener;
-    }
-
-    public NegativeListener getNegativeListener() {
-        return negativeListener;
-    }
-
     /*Class Builder===============================================================================*/
     public static class Builder {
 
@@ -190,11 +178,13 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         private String title;
         private int titleColor = R.color.pDialogBlack;
         private int titleSize = 16;
+        private int titleGravity = Gravity.START;
         private boolean isTitleBold = false;
 
         private String subTitle;
         private int subTitleColor = R.color.pDialogBlack;
         private int subTitleSize = 15;
+        private int subTitleGravity = Gravity.START;
         private boolean isSubTitleBold = false;
 
         private String positiveTitle;
@@ -207,7 +197,7 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         private int negativeSize = 14;
         private boolean isNegativeTitleBold = false;
 
-        private int cornerRadius = dpToPx(8);
+        private int cornerRadius = 8;
         private boolean isCancelable = true;
         private boolean isRTL = true;
 
@@ -234,6 +224,11 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
             return this;
         }
 
+        public Builder titleGravity(int titleGravity) {
+            this.titleGravity = titleGravity;
+            return this;
+        }
+
         public Builder isTitleBold(boolean isTitleBold) {
             this.isTitleBold = isTitleBold;
             return this;
@@ -251,6 +246,11 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
         public Builder subTitleSize(int subTitleSize) {
             this.subTitleSize = subTitleSize;
+            return this;
+        }
+
+        public Builder subTitleGravity(int subTitleGravity) {
+            this.subTitleGravity = subTitleGravity;
             return this;
         }
 
