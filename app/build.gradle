@@ -20,6 +20,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.github.amspayam:PDialog-Android:1.0.8'
-//    implementation project(path: ':pdialog')
+//    implementation 'com.github.amspayam:PDialog-Android:1.0.8'
+    implementation project(path: ':pdialog')
 }

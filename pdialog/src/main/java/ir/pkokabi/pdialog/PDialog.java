@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
@@ -172,154 +171,156 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
 
     /*Class Builder===============================================================================*/
     public static class Builder {
-
-        private final Context context;
+        private Context context;
         private int id;
         private String title;
-        private int titleColor = R.color.pDialogBlack;
+        private int titleColor = Color.BLACK;
         private int titleSize = 16;
         private int titleGravity = Gravity.START;
-        private boolean isTitleBold = false;
+        private boolean isTitleBold;
 
         private String subTitle;
-        private int subTitleColor = R.color.pDialogBlack;
+        private int subTitleColor = Color.BLACK;
         private int subTitleSize = 15;
         private int subTitleGravity = Gravity.START;
-        private boolean isSubTitleBold = false;
+        private boolean isSubTitleBold;
 
         private String positiveTitle;
-        private int positiveColor = R.color.pDialogBlack;
+        private int positiveColor = Color.BLACK;
         private int positiveSize = 14;
-        private boolean isPositiveTitleBold = false;
+        private boolean isPositiveTitleBold;
 
         private String negativeTitle;
-        private int negativeColor = R.color.pDialogBlack;
+        private int negativeColor = Color.BLACK;
         private int negativeSize = 14;
-        private boolean isNegativeTitleBold = false;
+        private boolean isNegativeTitleBold;
 
         private int cornerRadius = 8;
         private boolean isCancelable = true;
         private boolean isRTL = true;
-
         private PositiveListener positiveListener;
         private NegativeListener negativeListener;
 
-        public Builder(Context context, int id) {
+        public Builder(Context context) {
             this.context = context;
-            this.id = id;
         }
 
-        public Builder title(String title) {
+        public Builder setId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
             this.title = title;
             return this;
         }
 
-        public Builder titleColor(int titleColor) {
+        public Builder setTitleColor(int titleColor) {
             this.titleColor = titleColor;
             return this;
         }
 
-        public Builder titleSize(int titleSize) {
+        public Builder setTitleSize(int titleSize) {
             this.titleSize = titleSize;
             return this;
         }
 
-        public Builder titleGravity(int titleGravity) {
+        public Builder setTitleGravity(int titleGravity) {
             this.titleGravity = titleGravity;
             return this;
         }
 
-        public Builder isTitleBold(boolean isTitleBold) {
+        public Builder setIsTitleBold(boolean isTitleBold) {
             this.isTitleBold = isTitleBold;
             return this;
         }
 
-        public Builder subTitle(String subTitle) {
+        public Builder setSubTitle(String subTitle) {
             this.subTitle = subTitle;
             return this;
         }
 
-        public Builder subTitleColor(int subTitleColor) {
+        public Builder setSubTitleColor(int subTitleColor) {
             this.subTitleColor = subTitleColor;
             return this;
         }
 
-        public Builder subTitleSize(int subTitleSize) {
+        public Builder setSubTitleSize(int subTitleSize) {
             this.subTitleSize = subTitleSize;
             return this;
         }
 
-        public Builder subTitleGravity(int subTitleGravity) {
+        public Builder setSubTitleGravity(int subTitleGravity) {
             this.subTitleGravity = subTitleGravity;
             return this;
         }
 
-        public Builder isSubTitleBold(boolean isSubTitleBold) {
+        public Builder setIsSubTitleBold(boolean isSubTitleBold) {
             this.isSubTitleBold = isSubTitleBold;
             return this;
         }
 
-        public Builder positiveTitle(String positiveTitle) {
+        public Builder setPositiveTitle(String positiveTitle) {
             this.positiveTitle = positiveTitle;
             return this;
         }
 
-        public Builder positiveColor(int positiveColor) {
+        public Builder setPositiveColor(int positiveColor) {
             this.positiveColor = positiveColor;
             return this;
         }
 
-        public Builder positiveSize(int positiveSize) {
+        public Builder setPositiveSize(int positiveSize) {
             this.positiveSize = positiveSize;
             return this;
         }
 
-        public Builder isPositiveTitleBold(boolean isPositiveTitleBold) {
+        public Builder setIsPositiveTitleBold(boolean isPositiveTitleBold) {
             this.isPositiveTitleBold = isPositiveTitleBold;
             return this;
         }
 
-        public Builder negativeTitle(String negativeTitle) {
+        public Builder setNegativeTitle(String negativeTitle) {
             this.negativeTitle = negativeTitle;
             return this;
         }
 
-        public Builder negativeColor(int negativeColor) {
+        public Builder setNegativeColor(int negativeColor) {
             this.negativeColor = negativeColor;
             return this;
         }
 
-        public Builder negativeSize(int negativeSize) {
+        public Builder setNegativeSize(int negativeSize) {
             this.negativeSize = negativeSize;
             return this;
         }
 
-        public Builder isNegativeTitleBold(boolean isNegativeTitleBold) {
+        public Builder setIsNegativeTitleBold(boolean isNegativeTitleBold) {
             this.isNegativeTitleBold = isNegativeTitleBold;
             return this;
         }
 
-        public Builder cornerRadius(int cornerRadius) {
+        public Builder setCornerRadius(int cornerRadius) {
             this.cornerRadius = cornerRadius;
             return this;
         }
 
-        public Builder isCancelable(boolean isCancelable) {
+        public Builder setIsCancelable(boolean isCancelable) {
             this.isCancelable = isCancelable;
             return this;
         }
 
-        public Builder isRTL(boolean isRTL) {
+        public Builder setIsRTL(boolean isRTL) {
             this.isRTL = isRTL;
             return this;
         }
 
-        public Builder setPositiveListener(PositiveListener positiveListener) {
+        public Builder setPositiveListener(PDialog.PositiveListener positiveListener) {
             this.positiveListener = positiveListener;
             return this;
         }
 
-        public Builder setNegativeListener(NegativeListener negativeListener) {
+        public Builder setNegativeListener(PDialog.NegativeListener negativeListener) {
             this.negativeListener = negativeListener;
             return this;
         }
@@ -327,7 +328,6 @@ public class PDialog extends AppCompatDialog implements View.OnClickListener {
         public PDialog build() {
             return new PDialog(context, this);
         }
-
     }
 
     /*Dialog Interfaces===========================================================================*/

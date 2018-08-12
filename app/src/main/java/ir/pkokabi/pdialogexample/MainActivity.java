@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
+import android.widget.Toast;
 
 import ir.pkokabi.pdialog.NetworkDialog;
 import ir.pkokabi.pdialog.PDialog;
@@ -27,37 +28,23 @@ public class MainActivity extends AppCompatActivity implements PDialog.PositiveL
             @Override
             public void onClick(View v) {
                 new PDialog
-                        .Builder(context, 1)
-                        .title(getString(R.string.sample))
-                        .subTitle("سلام چه خبر ، چطوری؟")
-                        .positiveTitle("خوبم تو چطوری؟")
-                        .negativeTitle("به تو چه؟")
-                        .cornerRadius(8)
+                        .Builder(context)
+                        .setId(1)
+                        .setTitle("Hi")
+                        .setPositiveTitle("Ok")
+                        .setNegativeTitle("Cancel")
+                        .setCornerRadius(8)
                         .setPositiveListener(MainActivity.this)
+                        .setIsRTL(false)
                         .build();
             }
         });
-//
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new NetworkDialog
-//                        .Builder(context)
-//                        .isPersian(true)
-//                        .setButtonBackground(R.drawable.shape_internet)
-//                        .build();
-//            }
-//        });
 
     }
 
     @Override
     public void onPositiveClick(int id) {
-
+        Toast.makeText(this, "OK Clicked", Toast.LENGTH_SHORT).show();
     }
 
-//    @Override
-//    public void onPositiveClick() {
-//        Toast.makeText(this, "OK Clicked", Toast.LENGTH_SHORT).show();
-//    }
 }
